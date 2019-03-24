@@ -16,9 +16,9 @@ const User = connexion.define('T_User', {
     }
   }, {
     tableName: 'T_User'
-  })
+  });
 
 User.hasMany(Mesure, {as : 'T_Mesure', foreignKey: 'user_login', sourceKey: 'login'});
-Mesure.belongsTo(User, {as : 'T_User', foreignKey: 'user_login', targetKey: 'login'});$
+Mesure.belongsTo(User, {as : 'T_User', foreignKey: 'user_login', targetKey: 'login'});
 
 module.exports = User;

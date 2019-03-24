@@ -1,18 +1,41 @@
 let express = require('express');  //create route
 let bodyParser = require('body-parser'); //grab info from POST request
+var morgan = require('morgan');             // log requests to the console (express4)
 let app = express();
 let server = require('http').Server(app);
-let basicAuth = require('basic-auth-connect');
+var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+var cors = require('cors');
 let config = require('./config/config');
 
-app.use(basicAuth('admin','12345'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use('/api',require('./src/controller/useRouter'));
 
+app.use(morgan('dev'));                                         // log every request to the console
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+// parse application/json
+// app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+app.use(methodOverride());
+app.use(cors());
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.use('/app',require('./src/controller/useRouter'));
 
 server.listen(config.port_http)
 
+app.get('/checkname/:login', function(req, res){
+    if(req.params.login.toLowerCase() === 'homer'){
+        res.status(401).send({message: 'Sorry, no Homer\'s!'});
+    } else {
+        res.json('Welcome!');
+        console.log(req.params.login);
+    }
+});
 server.on('listening', function(){
 
     function print (path, layer) {
@@ -47,4 +70,8 @@ server.on('listening', function(){
 
     console.log(`REST API run on http://localhost:${config.port_http}`);
 });
+
+
+console.log("==> App listening on port 8080");
+console.log("App run on  :::: http://localhost:8080");
 

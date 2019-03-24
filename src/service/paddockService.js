@@ -1,13 +1,20 @@
-
 const paddock = require('../models/T_Paddock');
-const animal = require('../models/T_Animal');
 
-class paddockService{
+class paddockService {
 
-    static gettAll(){
+    static gettAll() {
         return paddock.findAll({
-            include: [{model: animal, as: 'T_Animal' ,attributes: ['snit']}]}
-        )};
+            attributes: ['nom']
+        });
+    }
+
+    static findPaddock(id) {
+        return paddock.findOne({
+            where: {
+                id: id
+            }
+        })
+    };
 }
 
 module.exports = paddockService;
