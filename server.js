@@ -12,33 +12,27 @@ app.use(morgan('dev'));                                         // log every req
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-// parse application/json
-// app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 app.use(cors());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, POST');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-app.use('/app',require('./src/controller/useRouter'));
+app.use('/app', require('./src/controller/useRouter'));
 
 server.listen(config.port_http)
 
-app.get('/checkname/:login', function(req, res){
-    if(req.params.login.toLowerCase() === 'homer'){
-        res.status(401).send({message: 'Sorry, no Homer\'s!'});
-    } else {
-        res.json('Welcome!');
-        console.log(req.params.login);
-    }
+app.get('/checkname/:selectedPaddock', function (req, res) {
+    console.log("-------------------  " + req.params.selectedPaddock);
+    res.status(200).send({message: 'taraaaaaa ! '});
 });
-server.on('listening', function(){
+server.on('listening', function () {
 
-    function print (path, layer) {
+    function print(path, layer) {
         if (layer.route) {
             layer.route.stack.forEach(print.bind(null, path.concat(split(layer.route.path))))
         } else if (layer.name === 'router' && layer.handle.stack) {
@@ -50,7 +44,7 @@ server.on('listening', function(){
         }
     }
 
-    function split (thing) {
+    function split(thing) {
         if (typeof thing === 'string') {
             return thing.split('/')
         } else if (thing.fast_slash) {

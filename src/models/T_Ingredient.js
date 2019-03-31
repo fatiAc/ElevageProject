@@ -6,22 +6,21 @@ const Ingredient_param = require('./T_Ingredient_param');
 
 const Ingredient = connexion.define('T_Ingredient', {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
     },
     nom: {
-      type: DataTypes.STRING,
-      allowNull: true
+        type: DataTypes.STRING,
+        allowNull: true
     }
-  }, {
+}, {
     tableName: 'T_Ingredient'
-  })
+})
 
 Ingredient.hasMany(Ingredient_param, {as: 'T_Ingredient_param', foreignKey: 'ingredienParam_ID', sourceKey: 'id'})
-Ingredient_param.belongsTo(Ingredient, {as : 'T_Ingredient', foreignKey: 'ingredienParam_ID', targetKey: 'id'});
-
-
+Ingredient_param.belongsTo(Ingredient, {as: 'T_Ingredient', foreignKey: 'ingredienParam_ID', targetKey: 'id'});
 
 
 module.exports = Ingredient;

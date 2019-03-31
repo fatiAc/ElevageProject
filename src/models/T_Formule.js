@@ -5,34 +5,35 @@ const Ingredient = require('./T_Ingredient');
 
 const Formule = connexion.define('T_Formule', {
     id: {
-      type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     pourcentage: {
-      type: DataTypes.FLOAT,
-      allowNull: true
+        type: DataTypes.FLOAT,
+        allowNull: true
     },
     nourriture_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'T_Nourriture',
-        key: 'id'
-      }
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'T_Nourriture',
+            key: 'id'
+        }
     },
     ingredient_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'T_Ingredient',
-        key: 'id'
-      }
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'T_Ingredient',
+            key: 'id'
+        }
     }
-  }, {
+}, {
     tableName: 'T_Formule'
-  })
+})
 
-Formule.hasOne(Ingredient, {as : 'T_Ingredient', foreignKey: 'ingredient_ID'});
+Formule.hasOne(Ingredient, {as: 'T_Ingredient', foreignKey: 'ingredient_ID'});
 
 module.exports = Formule;

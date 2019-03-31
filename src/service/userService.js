@@ -1,21 +1,23 @@
 const user = require('../models/T_User');
 
-class userService{
+class userService {
 
-    static findOneByCredinitals(userLogin, userPassword){
+    static findOneByCredinitals(userLogin, userPassword) {
         return user.findOne({
-            where : {
-                login : userLogin,
-                password : userPassword
-            }
+            where: {
+                login: userLogin,
+                password: userPassword
+            }, attributes: ['password']
+
         })
     };
 
-    static findByLogin(userLogin){
+    static findByLogin(userLogin) {
         return user.findOne({
-            where : {
-                login : userLogin
-            }
+            where: {
+                login: userLogin
+            }, attributes: ['login']
+
         })
     };
 

@@ -1,9 +1,10 @@
 let express = require('express');
 let router = express.Router();
-let paddockSrv = require('../service/paddockService');
+let periodAlimentationSrv = require('../service/periodeAlimentationService');
 
-router.get('/allPadock', function (req, res) {
-    paddockSrv.gettAll()
+
+router.get('/periodeName', function (req, res) {
+    periodAlimentationSrv.getPeriodeName()
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);
@@ -14,8 +15,8 @@ router.get('/allPadock', function (req, res) {
         .catch(err => {
             res.status(401).json(err);
         })
-
 });
+
 
 
 module.exports = router;

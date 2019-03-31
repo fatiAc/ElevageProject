@@ -8,12 +8,12 @@ class paddockService {
         });
     }
 
-    static findPaddock(id) {
+    static findPaddockID(paddockName) {
         return paddock.findOne({
             where: {
-                id: id
-            }
-        })
+                nom: paddockName
+            }, attributes: ['id']
+        });
     };
 }
 

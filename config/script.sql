@@ -1,6 +1,9 @@
+create database elevageDB collate French_CI_AS
+go
+
 create table T_Ingredient
 (
-  id  int not null
+  id  int identity
     primary key,
   nom varchar(40)
     unique
@@ -9,7 +12,7 @@ go
 
 create table T_Ingredient_param
 (
-  id              int not null
+  id              int identity
     primary key,
   qte_theorique   smallint,
   qte_reel        smallint,
@@ -23,7 +26,7 @@ go
 
 create table T_Machine
 (
-  id       tinyint not null
+  id       tinyint identity
     primary key,
   capacite smallint
 )
@@ -31,7 +34,7 @@ go
 
 create table T_Nourriture
 (
-  id  tinyint not null
+  id  tinyint identity
     primary key,
   nom varchar(40)
 )
@@ -44,14 +47,14 @@ create table T_Formule
     references T_Nourriture,
   ingredient_ID int
     references T_Ingredient,
-  id            tinyint not null
+  id            tinyint identity
     primary key
 )
 go
 
 create table T_Periode_alimentation
 (
-  id      tinyint not null
+  id      tinyint identity
     primary key,
   periode varchar(20)
 )
@@ -59,7 +62,7 @@ go
 
 create table T_TypePaddock
 (
-  id   tinyint not null
+  id   tinyint identity
     primary key,
   type varchar(20)
 )
@@ -67,7 +70,7 @@ go
 
 create table T_Paddock
 (
-  id          tinyint not null
+  id          tinyint identity
     primary key,
   nom         varchar(20),
   typePaddock tinyint
@@ -94,7 +97,7 @@ go
 
 create table T_Mesure
 (
-  id         int not null
+  id         int identity
     primary key,
   poids      smallint,
   dateMesure date,
@@ -107,7 +110,7 @@ go
 
 create table T_Mouvement
 (
-  id           int not null
+  id           int identity
     primary key,
   dateMvnt     date,
   paddock_src  tinyint
@@ -125,7 +128,7 @@ go
 
 create table T_Session_alimentation
 (
-  id         int not null
+  id         int identity
     primary key,
   date       date,
   user_login varchar(40)
@@ -135,11 +138,11 @@ go
 
 create table T_Detail_session_alimnt
 (
-  id                      int not null
+  id                      int identity
     primary key,
   note                    tinyint,
-  nbrVache                tinyint,
-  commentaire             varchar(1),
+  nbrVache                smallint,
+  commentaire             varchar(500),
   paddock_ID              tinyint
     references T_Paddock,
   session_alimentation_ID int
@@ -149,7 +152,7 @@ go
 
 create table T_Recup_sessionAlimnt
 (
-  id                int not null
+  id                int identity
     primary key,
   nbrPreparation    smallint,
   qteTotal          tinyint,
@@ -170,7 +173,7 @@ go
 
 create table T_Livraison
 (
-  id                     int not null
+  id                     int identity
     primary key,
   recup_sessionAlimnt_ID int
     references T_Recup_sessionAlimnt
@@ -183,7 +186,7 @@ go
 
 create table T_Periode_Ration
 (
-  id                     int not null
+  id                     int identity
     primary key,
   quantite               smallint,
   moy_qte_vache          float,
@@ -195,6 +198,12 @@ create table T_Periode_Ration
     references T_Periode_alimentation,
   livraison_ID           int
     references T_Livraison
+)
+go
+
+create table script
+(
+  C1 text
 )
 go
 

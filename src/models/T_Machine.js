@@ -4,16 +4,17 @@ const DataTypes = require('sequelize');
 
 const Machine = connexion.define('T_Machine', {
     id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
     },
     capacite: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+        type: DataTypes.INTEGER,
+        allowNull: true
     }
-  }, {
+}, {
     tableName: 'T_Machine'
-  })
+})
 
 module.exports = Machine;
