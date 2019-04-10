@@ -4,6 +4,7 @@ const DataTypes = require('sequelize');
 const Periode_ration = require('./T_Periode_Ration');
 const Recup_session = require('./T_Recup_sessionAlimnt');
 const Ingredient_param = require('./T_Ingredient_param');
+const Paddock_param = require('./T_Paddock_param');
 
 const Livraison = connexion.define('T_Livraison', {
     id: {
@@ -19,18 +20,25 @@ const Livraison = connexion.define('T_Livraison', {
             model: 'T_Recup_sessionAlimnt',
             key: 'id'
         }
-    }
+    },
+    quantite: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    numero: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
 }, {
     tableName: 'T_Livraison'
 })
 
-Livraison.hasMany(Periode_ration, {as: 'T_Periode_Ration', foreignKey: 'livraison_ID', sourceKey: 'id'});
-Periode_ration.belongsTo(Livraison, {as: 'T_Livraison', foreignKey: 'livraison_ID', targetKey: 'id'});
+Livraison.hasMany(Paddock_param, {as: 'T_Paddock_param', foreignKey: 'livraison_ID', sourceKey: 'id'});
+Paddock_param.belongsTo(Livraison, {as: 'T_Livraison', foreignKey: 'livraison_ID', targetKey: 'id'});
 
 Livraison.hasMany(Ingredient_param, {as: 'T_Ingredient_param', foreignKey: 'livraison_ID', sourceKey: 'id'});
 Ingredient_param.belongsTo(Livraison, {as: 'T_Livraison', foreignKey: 'livraison_ID', targetKey: 'id'});
 
-Livraison.hasOne(Recup_session, {as: 'T_Recup_sessionAlimnt', foreignKey: 'T_Recup_sessionAlimnt'});
 
 
 module.exports = Livraison;

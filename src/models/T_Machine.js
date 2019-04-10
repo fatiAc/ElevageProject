@@ -12,6 +12,10 @@ const Machine = connexion.define('T_Machine', {
     capacite: {
         type: DataTypes.INTEGER,
         allowNull: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     tableName: 'T_Machine'

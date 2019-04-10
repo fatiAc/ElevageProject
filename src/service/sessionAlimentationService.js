@@ -10,6 +10,15 @@ class sessionAlimentationService {
         });
     }
 
+    static findBydateAndUser(date, userLogin) {
+        return sessionAlimentation.findOne({
+            where: {
+                date: date,
+                user_login: userLogin
+            }, attributes: ['id']
+        })
+    }
+
 }
 
 module.exports = sessionAlimentationService;

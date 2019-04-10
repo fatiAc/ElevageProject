@@ -14,7 +14,21 @@ router.get('/allPadock', function (req, res) {
         .catch(err => {
             res.status(401).json(err);
         })
+});
 
+
+router.get('/paddockName/:paddockID', function (req, res) {
+    paddockSrv.findByID(req.params.paddockID)
+        .then(data => {
+            if (data != null) {
+                res.status(200).send(data);
+                console.log(data);
+            } else
+                res.status(401).send(false);
+        })
+        .catch(err => {
+            res.status(401).json(err);
+        })
 });
 
 

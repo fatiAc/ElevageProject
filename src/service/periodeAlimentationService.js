@@ -6,14 +6,21 @@ class periodeAlimentationService{
 
     static getPeriodeName(){
         return periodeAlimentation.findAll({
-            attributes: ['periode']
+            attributes: ['id','periode']
         });
     }
 
-    static findByName(periodeName) {
+    static findIdByName(periodeName) {
         return periodeAlimentation.findOne({
             where: {periode: periodeName},
             attributes: ['id']
+        });
+    }
+
+    static findIdByID(id) {
+        return periodeAlimentation.findOne({
+            where: {id: id},
+            attributes: ['periode']
         });
     }
 

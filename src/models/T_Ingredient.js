@@ -19,8 +19,5 @@ const Ingredient = connexion.define('T_Ingredient', {
     tableName: 'T_Ingredient'
 })
 
-Ingredient.hasMany(Ingredient_param, {as: 'T_Ingredient_param', foreignKey: 'ingredienParam_ID', sourceKey: 'id'})
-Ingredient_param.belongsTo(Ingredient, {as: 'T_Ingredient', foreignKey: 'ingredienParam_ID', targetKey: 'id'});
-
 
 module.exports = Ingredient;

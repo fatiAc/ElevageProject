@@ -15,6 +15,14 @@ class paddockService {
             }, attributes: ['id']
         });
     };
+
+    static findByID(paddockName) {
+        return paddock.findOne({
+            where: {
+                id: paddockName
+            }, attributes: ['nom']
+        });
+    };
 }
 
 module.exports = paddockService;
