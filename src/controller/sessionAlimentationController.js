@@ -99,7 +99,6 @@ router.post('/periodeRation', function (req, res) {
                                 if (rationData != null) {
                                     periodeID = periodeData.id;
                                     rationID = rationData.id;
-                                    console.log("periode id == " + periodeID + "  ration ID == " + rationID);
                                     periodeRationSrv.create(req.body.quantites[req.body.periodes.indexOf(periode)], detailAlimentationID, req.body.nbrVache, rationID, periodeID)
                                         .then(data => {
                                             if (data != null) {

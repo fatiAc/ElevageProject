@@ -8,8 +8,6 @@ router.get('/periodeRationParams/:detailSessionID', function (req, res) {
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);
-                console.log(data);
-
             } else
                 res.status(401).send(false);
         })
@@ -24,7 +22,6 @@ router.get('/qtteTotale/:periodeID/:rationID/:date/:userLogin', function (req, r
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);
-                console.log(data);
             } else
                 res.status(200).send(null);
         })
@@ -40,7 +37,6 @@ router.get('/paddocksWithQtte/:periodeID/:rationID/:date/:userLogin', function (
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);
-                console.log(data);
             } else
                 res.status(200).send(null);
         })
