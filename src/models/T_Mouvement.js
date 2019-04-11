@@ -65,7 +65,7 @@ Mouvement.hasOne(Mesure, {as: 'T_Mesure', foreignKey: 'mesure_ID'});
 Mouvement.hasOne(Animal, {as: 'T_Animal', foreignKey: 'animal_ID'});
 
 Mouvement.hasOne(Paddock, {as: 'T_Paddock', foreignKey: 'paddock_src'});
-Mouvement.hasOne(Paddock, {as: 'T_Paddock', foreignKey: 'paddock_dest'});
+// Mouvement.hasOne(Paddock, {as: 'T_Paddock', foreignKey: 'paddock_dest'});
 
 
 module.exports = Mouvement;

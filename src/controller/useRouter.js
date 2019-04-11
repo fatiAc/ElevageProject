@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 router.use('/machine', require('./machineController'));
+router.use('/mouvement', require('./mouvementController'));
 router.use('/nourriture', require('./nourritureController'));
 router.use('/paddock', require('./paddockController'));
 router.use('/periodeAlimentation', require('./periodeAlimentationController'));

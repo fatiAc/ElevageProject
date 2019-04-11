@@ -26,10 +26,6 @@ app.use('/app', require('./src/controller/useRouter'));
 
 server.listen(config.port_http)
 
-app.get('/checkname/:selectedPaddock', function (req, res) {
-    console.log("-------------------  " + req.params.selectedPaddock);
-    res.status(200).send({message: 'taraaaaaa ! '});
-});
 server.on('listening', function () {
 
     function print(path, layer) {
