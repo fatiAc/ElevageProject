@@ -12,7 +12,7 @@ router.get('/paddockByAnimal/:snit', function (req, res) {
             if (data != null) {
                 res.status(200).send(data);
             } else
-                res.status(401).send(null);
+                res.status(200).send(false);
         })
         .catch(err => {
             res.status(401).json(err);

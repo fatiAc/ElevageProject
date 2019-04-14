@@ -7,9 +7,9 @@ router.get('/verifyPassword/:password', function (req, res) {
     userSrv.findOneByCredinitals(login, req.params.password)
         .then(data => {
             if (data != null) {
-                res.status(200).send(true);
+                res.status(200).send(data);
             } else
-                res.status(401).send(false);
+                res.status(200).send(false);
         })
         .catch(err => {
             res.status(401).json(err);
@@ -21,9 +21,9 @@ router.get('/verifyLogin/:login', function (req, res) {
         .then(data => {
             if (data != null) {
                 login = req.params.login;
-                res.status(200).send(true);
+                res.status(200).send(data);
             } else
-                res.status(401).send(false);
+                res.status(200).send(false);
         })
         .catch(err => {
             res.status(401).json(err);

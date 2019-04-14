@@ -5,13 +5,20 @@ let sequelize = require('sequelize');
 
 class paddockService {
 
+    static getPaddocksBySession(date, user_login) {
+        let query = `SELECT id, nom FROM T_Paddock
+                     WHERE T_Paddock.id NOT IN (SELECT paddock_ID FROM T_Detail_session_alimnt
+                                                WHERE session_alimentation_ID = (SELECT id FROM T_Session_alimentation
+                                                                                 WHERE date = '${date}' AND user_login = '${user_login}'))`;
+        return dbConnect.query(query, {type: sequelize.QueryTypes.SELECT})
+    }
+
     static gettAll() {
         return paddock.findAll({
             attributes: ['id', 'nom'],
             order: [
                 ['typePaddock', 'ASC'],
                 ['nom', 'ASC'],
-
             ],
         });
     }

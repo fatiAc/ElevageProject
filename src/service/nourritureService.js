@@ -4,9 +4,9 @@ let sequelize = require('sequelize');
 
 class nourritureService {
 
-    static getRationName() {
+    static getRationsInfo() {
         return nourriture.findAll({
-            attributes: ['nom']
+            attributes: ['id', 'nom']
         });
     }
 

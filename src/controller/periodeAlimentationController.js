@@ -4,8 +4,8 @@ let nourritureSrv = require('../service/nourritureService');
 let periodeAlimentationSrv = require('../service/periodeAlimentationService');
 let periodeRationSrv = require('../service/periodeRationService');
 
-router.get('/periodeName', function (req, res) {
-    periodeAlimentationSrv.getPeriodeName()
+router.get('/periodesInfo', function (req, res) {
+    periodeAlimentationSrv.getPeriodesInfo()
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);

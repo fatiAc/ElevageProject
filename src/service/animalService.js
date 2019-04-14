@@ -4,6 +4,7 @@ let sequelize = require('sequelize');
 
 class animalService {
 
+
     static updatePadockOfAnimal(snit, paddock_ID) {
         return animal.findOne({
             where: {
@@ -41,6 +42,15 @@ class animalService {
                     })
                 }
             })
+    }
+
+    static findByID(snit) {
+        return animal.findOne({
+            where: {
+                snit: snit
+            },
+            attributes: ['snit']
+        });
     }
 }
 

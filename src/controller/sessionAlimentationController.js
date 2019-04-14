@@ -11,14 +11,38 @@ let sessionAlimentatinID;
 let detailAlimentationID;
 
 
-router.post('/saveSessionAlimentation', function (req, res) {
-    sessionAlimentationSrv.create(req.body.date, req.body.login)
+router.get('/getPaddockBySession/:date/:user_login', function (req, res) {
+    paddockSrv.getPaddocksBySession(req.params.date, req.params.user_login)
         .then(data => {
             if (data != null) {
+                res.status(200).send(data);
+            } else {
+                res.status(401).send(null);
+            }
+        })
+        .catch(err => {
+            res.status(401).send(err);
+        });
+});
+
+router.post('/saveSessionAlimentation', function (req, res) {
+    date = req.body.date;
+    user_login = req.body.login;
+    console.log("date ==== " + date + "  login ==  ", user_login);
+    sessionAlimentationSrv.findBydateAndUser(date, user_login)
+        .then(data => {
+            if (data != null) {
+                console.log("existe deja =============================")
                 sessionAlimentatinID = data.id;
                 res.status(200).json(data);
             } else {
-                res.status(401).send(false);
+                console.log("I will create it !!!!  =============================")
+                sessionAlimentationSrv.create(date, user_login)
+                    .then(data => {
+                        if (data != null) {
+                            res.status(200).send(data);
+                        }
+                    })
             }
         })
         .catch(err => {
@@ -26,6 +50,21 @@ router.post('/saveSessionAlimentation', function (req, res) {
             res.status(401).send(err);
         });
 });
+// router.post('/saveSessionAlimentation', function (req, res) {
+//     sessionAlimentationSrv.create(req.body.date, req.body.login)
+//         .then(data => {
+//             if (data != null) {
+//                 sessionAlimentatinID = data.id;
+//                 res.status(200).json(data);
+//             } else {
+//                 res.status(401).send(false);
+//             }
+//         })
+//         .catch(err => {
+//             console.log("errooooora  !! ");
+//             res.status(401).send(err);
+//         });
+// });
 
 
 router.get('/paddockID/:name', function (req, res) {
@@ -50,7 +89,7 @@ router.post('/detailSessionAlimentation', function (req, res) {
                 detailAlimentationID = data.id;
                 res.status(200).json(data);
             } else {
-                res.status(401).send(false);
+                res.status(401).send(null);
             }
         })
         .catch(err => {
@@ -86,36 +125,22 @@ router.get('/periodeID/:periode', function (req, res) {
 });
 
 router.post('/periodeRation', function (req, res) {
-
-    var periodeID = null;
-    var rationID = null;
-    for (let periode of req.body.periodes) {
-        if (req.body.rations[req.body.periodes.indexOf(periode)] != null && periode != null) {
-            periodeAlimentationSrv.findIdByName(periode)
-                .then(periodeData => {
-                    if (periodeData != null) {
-                        nourritureSrv.findByIdName(req.body.rations[req.body.periodes.indexOf(periode)])
-                            .then(rationData => {
-                                if (rationData != null) {
-                                    periodeID = periodeData.id;
-                                    rationID = rationData.id;
-                                    periodeRationSrv.create(req.body.quantites[req.body.periodes.indexOf(periode)], detailAlimentationID, req.body.nbrVache, rationID, periodeID)
-                                        .then(data => {
-                                            if (data != null) {
-                                                console.log("success !!!!!! ")
-                                            } else {
-                                                console.log("saving data is failed !!!!!! ")
-                                                res.status(401).send(false);
-                                            }
-                                        })
-                                        .catch(err => {
-                                            res.status(401).json(err);
-                                        })
-                                }
-                            })
-                            .catch(err => {
-                                res.status(401).json(err);
-                            })
+    let rations = req.body.rations;
+    let qttes = req.body.quantites
+    let periodes = req.body.periodes;
+    console.log("rations *-*-*-*--*-*-*-*-*-*-*-*-*-  ", rations);
+    console.log("rations *-*-*-*--*-*-*-*-*-*-*-*-*-  ", req.body.quantites);
+    for (let item of periodes) {
+        let qtte = qttes[periodes.indexOf(item)];
+        let ration = rations[periodes.indexOf(item)];
+        if (qttes != null && ration != null) {
+            periodeRationSrv.create(qtte, detailAlimentationID, req.body.nbrVache, ration, item.id)
+                .then(data => {
+                    if (data != null) {
+                        console.log("save periode ration succes !!  ");
+                    } else {
+                        console.log("saving periode ration is failed !!!!!! ")
+                        res.status(200).send(null);
                     }
                 })
                 .catch(err => {
@@ -123,12 +148,12 @@ router.post('/periodeRation', function (req, res) {
                 })
         }
     }
+    res.status(200).send(true);
 
 
 });
 
 router.get('/detailOfSession', function (req, res) {
-    console.log("voila session id == " + detailAlimentationID);
     detailAlimentationSrv.findByID(detailAlimentationID)
         .then(data => {
             if (data != null) {
@@ -140,7 +165,6 @@ router.get('/detailOfSession', function (req, res) {
         })
 
 });
-
 
 
 module.exports = router;

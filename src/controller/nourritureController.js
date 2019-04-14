@@ -3,8 +3,8 @@ let router = express.Router();
 let nourritureSrv = require('../service/nourritureService');
 
 
-router.get('/rationName', function (req, res) {
-    nourritureSrv.getRationName()
+router.get('/rationsInfo', function (req, res) {
+    nourritureSrv.getRationsInfo()
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);

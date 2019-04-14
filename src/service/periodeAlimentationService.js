@@ -4,7 +4,7 @@ let periodeAlimentation = require('../models/T_Periode_alimentation');
 class periodeAlimentationService{
 
 
-    static getPeriodeName(){
+    static getPeriodesInfo(){
         return periodeAlimentation.findAll({
             attributes: ['id','periode']
         });
