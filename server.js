@@ -60,8 +60,3 @@ server.on('listening', function () {
 
     console.log(`REST API run on http://localhost:${config.port_http}`);
 });
-
-
-console.log("==> App listening on port 8080");
-console.log("App run on  :::: http://localhost:8080");
-

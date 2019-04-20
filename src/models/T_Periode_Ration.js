@@ -44,14 +44,6 @@ const Periode_ration = connexion.define('T_Periode_Ration', {
             key: 'id'
         }
     },
-    livraison_ID: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'T_Livraison',
-            key: 'id'
-        }
-    }
 }, {
     tableName: 'T_Periode_Ration'
 })

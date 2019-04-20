@@ -59,7 +59,6 @@ router.post('/saveLivraison', function (req, res) {
                             }
                         )
                 }
-
                 formuleSrv.findByRation(req.body.nourriture_ID)
                     .then(formuleData => {
                         if (formuleData != null) {

@@ -28,51 +28,29 @@ router.get('/getPaddockBySession/:date/:user_login', function (req, res) {
 router.post('/saveSessionAlimentation', function (req, res) {
     date = req.body.date;
     user_login = req.body.login;
-    console.log("date ==== " + date + "  login ==  ", user_login);
     sessionAlimentationSrv.findBydateAndUser(date, user_login)
         .then(data => {
             if (data != null) {
-                console.log("existe deja =============================")
                 sessionAlimentatinID = data.id;
                 res.status(200).json(data);
             } else {
-                console.log("I will create it !!!!  =============================")
                 sessionAlimentationSrv.create(date, user_login)
                     .then(data => {
                         if (data != null) {
-                            res.status(200).send(data);
+                            res.status(200).json(data);
                         }
                     })
             }
         })
         .catch(err => {
-            console.log("errooooora  !! ");
             res.status(401).send(err);
         });
 });
-// router.post('/saveSessionAlimentation', function (req, res) {
-//     sessionAlimentationSrv.create(req.body.date, req.body.login)
-//         .then(data => {
-//             if (data != null) {
-//                 sessionAlimentatinID = data.id;
-//                 res.status(200).json(data);
-//             } else {
-//                 res.status(401).send(false);
-//             }
-//         })
-//         .catch(err => {
-//             console.log("errooooora  !! ");
-//             res.status(401).send(err);
-//         });
-// });
-
 
 router.get('/paddockID/:name', function (req, res) {
-    console.log(req.params.name);
     paddockSrv.findPaddockID(req.params.name)
         .then(data => {
             if (data != null) {
-                console.log("************** ID + " + data.id);
                 res.status(200).send(data);
             } else
                 res.status(401).send(false);
@@ -89,7 +67,7 @@ router.post('/detailSessionAlimentation', function (req, res) {
                 detailAlimentationID = data.id;
                 res.status(200).json(data);
             } else {
-                res.status(401).send(null);
+                res.status(200).send(false);
             }
         })
         .catch(err => {
@@ -128,8 +106,7 @@ router.post('/periodeRation', function (req, res) {
     let rations = req.body.rations;
     let qttes = req.body.quantites
     let periodes = req.body.periodes;
-    console.log("rations *-*-*-*--*-*-*-*-*-*-*-*-*-  ", rations);
-    console.log("rations *-*-*-*--*-*-*-*-*-*-*-*-*-  ", req.body.quantites);
+    let indx = 0;
     for (let item of periodes) {
         let qtte = qttes[periodes.indexOf(item)];
         let ration = rations[periodes.indexOf(item)];
@@ -137,7 +114,10 @@ router.post('/periodeRation', function (req, res) {
             periodeRationSrv.create(qtte, detailAlimentationID, req.body.nbrVache, ration, item.id)
                 .then(data => {
                     if (data != null) {
-                        console.log("save periode ration succes !!  ");
+                        indx++;
+                        if (indx == periodes.length) {
+                            res.status(200).send(true);
+                        }
                     } else {
                         console.log("saving periode ration is failed !!!!!! ")
                         res.status(200).send(null);
