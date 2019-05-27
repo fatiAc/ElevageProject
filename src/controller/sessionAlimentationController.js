@@ -9,16 +9,9 @@ let nourritureSrv = require('../service/nourritureService');
 
 let sessionAlimentatinID;
 let detailAlimentationID;
-let connectedUser;
 
-router.get('/getConnectedUser/:login', function (req, res) {
-    connectedUser = req.params.login;
-    console.log("connected user =====  ", connectedUser);
-});
-
-router.get('/getPaddockBySession/:date/:' + connectedUser, function (req, res) {
-    console.log("55555555555555555555")
-    paddockSrv.getPaddocksBySession(req.params.date, connectedUser)
+router.get('/getPaddockBySession/:date/:user_login', function (req, res) {
+    paddockSrv.getPaddocksBySession(req.params.date, req.params.user_login)
         .then(data => {
             if (data != null) {
                 res.status(200).send(data);
@@ -32,14 +25,13 @@ router.get('/getPaddockBySession/:date/:' + connectedUser, function (req, res) {
 });
 
 router.post('/saveSessionAlimentation', function (req, res) {
-    date = req.body.date;
-    sessionAlimentationSrv.findBydateAndUser(date, connectedUser)
+    sessionAlimentationSrv.findBydateAndUser(req.body.date, req.body.login)
         .then(data => {
             if (data != null) {
                 sessionAlimentatinID = data.id;
                 res.status(200).json(data);
             } else {
-                sessionAlimentationSrv.create(date, connectedUser)
+                sessionAlimentationSrv.create(req.body.date, req.body.login)
                     .then(data => {
                         if (data != null) {
                             sessionAlimentatinID = data.id;

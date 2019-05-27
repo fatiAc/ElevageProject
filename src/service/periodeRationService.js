@@ -9,7 +9,7 @@ class periodeRationService {
     static create(qtte, detailAlimentation, nbrVache, nourritureID, periodeID) {
         return periodeRation.create({
             quantite: qtte,
-            moy_qte_vache: qtte / nbrVache,
+            moy_qte_vache: parseFloat(Math.round(qtte / nbrVache * 100) / 100).toFixed(2),
             detailAlimentation_ID: detailAlimentation,
             nourriture_ID: nourritureID,
             periodeAlimentation_ID: periodeID
@@ -21,7 +21,7 @@ class periodeRationService {
         select periode, nom as rationName, quantite from T_Periode_Ration pr
             inner join T_Periode_alimentation pa on pr.periodeAlimentation_ID = pa.id
             inner join T_Nourriture nr on pr.nourriture_ID = nr.id
-            where pr.detailAlimentation_ID =${detailSessionID}
+            where pr.detailAlimentation_ID = ${detailSessionID}
         `
         return dbConnect.query(query, {type: sequelize.QueryTypes.SELECT})
     }
@@ -40,7 +40,7 @@ class periodeRationService {
     }
 
     static paddocksWithQtte(periodeID, rationID, date, connectedUser) {
-        let query = `SELECT paddock_ID, nom AS paddockName,TPR.id as periodeRationID, TPR.quantite
+        let query = `SELECT paddock_ID, nom AS paddockName,TPR.id as periodeRationID, TPR.quantite, nbrVache, commentaire
                        FROM T_Detail_session_alimnt ds
                        INNER JOIN T_Paddock p ON p.id = ds.paddock_ID
                        INNER JOIN T_Periode_Ration TPR ON ds.id = TPR.detailAlimentation_ID

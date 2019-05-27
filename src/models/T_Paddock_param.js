@@ -11,7 +11,19 @@ const Paddock_param = connexion.define('T_Paddock_param', {
         autoIncrement: true
     },
     quantite: {
-        type: DataTypes.INTEGER,    
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    nbrElement: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    moyOfElement: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    commentaire: {
+        type: DataTypes.STRING,
         allowNull: true
     },
     paddock_ID: {

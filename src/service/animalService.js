@@ -33,8 +33,8 @@ class animalService {
         })
     }
 
-    static updatePadockOfAnimals(paddock_srv, paddock_dest) {
-        return this.findAllByPaddock(paddock_srv)
+    static updatePadockOfAnimals(paddock_src, paddock_dest) {
+        return this.findAllByPaddock(paddock_src)
             .then(animals => {
                 for (let animal of animals) {
                     animal.update({

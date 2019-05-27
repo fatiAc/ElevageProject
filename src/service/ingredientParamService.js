@@ -10,6 +10,8 @@ class ingredientParamService {
             livraison_ID: livraisonID
         });
     }
+
+
 }
 
 module.exports = ingredientParamService;

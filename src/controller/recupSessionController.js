@@ -47,7 +47,8 @@ router.post('/saveLivraison', function (req, res) {
         .then(livraisonData => {
             if (livraisonData != null) {
                 for (let detail of req.body.details) {
-                    paddockParamSrv.create(detail.qtte, detail.paddockID, livraisonData.id)
+                    let moyOfElement = parseFloat(Math.round((detail.qtte / detail.nbrVache) * 100) / 100).toFixed(2);
+                    paddockParamSrv.create(detail.qtte, detail.paddockID, detail.nbrVache, detail.commentaire, moyOfElement, livraisonData.id)
                         .then(paddockParamData => {
                             if (paddockParamData != null) {
                                 res.status(200).send(paddockParamData);
@@ -66,7 +67,6 @@ router.post('/saveLivraison', function (req, res) {
                                 ingredientParamSrv.create(livraisonData.quantite, formule.pourcentage, formule.ingredient_ID, livraisonData.id)
                                     .then(ingredinetParamData => {
                                         if (ingredinetParamData != null) {
-                                            console.log("save ingredient param succes -*-*-  ");
                                         }
                                     }).catch(err => {
                                     res.status(401).json(err);
